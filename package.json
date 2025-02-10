@@ -23,5 +23,10 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "@eslint/eslintrc": "^3"
-  }
+  },
+  "description": "Create **NextCommerce**, a modern, authentication-protected platform using **Next.js 15**, **Clerk**, and **Contentful CMS**. Users can browse featured items publicly and access the full catalog upon authentication. This project will test your ability to work with **authentication, CMS integration, and protected routes** while ensuring a seamless and visually appealing user experience.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
