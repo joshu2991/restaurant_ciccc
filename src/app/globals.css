@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Your+Font+Family&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +7,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary-color: #4343B5;
+  --secondary-color: #E47100;
+  --title-primary: #151819;
+  --subtitle-secondary: #FFB55C;
+  --text-white: #FCFCFD;
+  --text-black: #151819;
+  --background-black: #151819;
+  --background-white: #FCFCFD;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,7 +27,13 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Mona Sans', sans-serif;
 }
 
+.text-black {
+  color: var(--text-black) !important;
+}
 
+.text-white {
+  color: var(--text-white) !important;
+}
