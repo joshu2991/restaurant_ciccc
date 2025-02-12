@@ -1,6 +1,8 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import prisma from "../../lib/db";
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
@@ -58,7 +60,31 @@ export async function POST(req: Request) {
 
   /* TODO: Store user data in your database */
 
-  
+  if (eventType === "user.created" && "email_addresses" in evt.data) {
+    const user = {
+      clerkId: evt.data.id,
+      email: evt.data.email_addresses?.[0]?.email_address || "",
+      firstName: evt.data.first_name || "",
+      lastName: evt.data.last_name || "",
+      photo: evt.data.image_url || "",
+    };
+
+    console.dir(user, { depth: null });
+
+    // store it in our database
+
+    try {
+      // UPSERT == update or create
+      await prisma.user.upsert({
+        where: { clerkId: user.clerkId },
+        update: user,
+        create: user,
+      });
+      console.log("User stored in database");
+    } catch (err: any) {
+      return new NextResponse("Error: Could not store user data", err);
+    }
+  }
 
   return new Response("Webhook received", { status: 200 });
 }

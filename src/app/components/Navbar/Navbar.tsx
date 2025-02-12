@@ -1,12 +1,19 @@
 "use client";
 
-import { SignOutButton, SignedIn, SignedOut, SignUpButton } from "@clerk/nextjs";
+import {
+  SignOutButton,
+  SignedIn,
+  SignedOut,
+  SignUpButton,
+} from "@clerk/nextjs";
 import Link from "next/link";
 // import { NavbarProps } from "../../../types/Navbar";
 // import Button from "../Button/Button";
 import "./Navbar.css";
 // import { useState } from "react";
 // import { HiMenu, HiX } from "react-icons/hi";
+import {redirect} from "next/navigation"
+
 
 // export default function Navbar({ logo, links, buttonText, buttonClassname }: NavbarProps) {
 //     const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +70,11 @@ export default function Navbar() {
       <div className="flex gap-4 text-white ">
         {/* if the user is not signed in, show the sign in button */}
         <SignedOut>
-          <SignUpButton />
+          <SignUpButton>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={() => redirect("/sign-up")}>
+              Sign Up
+            </button>
+          </SignUpButton>
         </SignedOut>
 
         {/* if the user is signed in, show the sign out button */}
