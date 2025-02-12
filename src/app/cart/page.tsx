@@ -5,7 +5,7 @@ import Button from '@/app/components/Button/Button';
 import { useRouter } from 'next/navigation';
 
 const CartPage = () => {
-  const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, getCartTotal, initiateCheckout } = useCart();
   const router = useRouter();
 
   if (!cartItems || cartItems.length === 0) {
@@ -63,7 +63,7 @@ const CartPage = () => {
         <Button
           text="Proceed to Checkout"
           classname="button-primary mt-4"
-          onClick={() => router.push('/checkout')}
+          onClick={initiateCheckout}
         />
       </div>
     </div>

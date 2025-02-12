@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { CartItem } from '@/types/Cart/Cart';
 import toast from 'react-hot-toast';
+import { loadStripe } from '@stripe/stripe-js';
 
 interface CartContextType {
   cartItems: CartItem[];
@@ -10,6 +11,7 @@ interface CartContextType {
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  initiateCheckout: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -81,6 +83,46 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return cartItems.reduce((total, item) => total + (item.fields.price * item.quantity), 0);
   };
 
+  const initiateCheckout = async () => {
+    try {
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+      
+      const formattedItems = cartItems.map(item => ({
+        name: item.fields.title,
+        price: item.fields.price,
+        quantity: item.quantity,
+        currency: 'cad', 
+      }));
+
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ items: formattedItems }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Checkout failed');
+      }
+
+      const { sessionId } = await response.json();
+      
+      if (!sessionId) {
+        throw new Error('No session ID returned from the server');
+      }
+
+      const result = await stripe?.redirectToCheckout({ sessionId });
+      if (result?.error) {
+        throw new Error(result.error.message);
+      }
+    } catch (error) {
+      toast.error('Checkout failed. Please try again.');
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <CartContext.Provider value={{
       cartItems,
@@ -88,7 +130,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       removeFromCart,
       updateQuantity,
       clearCart,
-      getCartTotal
+      getCartTotal,
+      initiateCheckout
     }}>
       {children}
     </CartContext.Provider>
