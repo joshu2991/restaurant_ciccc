@@ -4,6 +4,12 @@
     align-items: center;
     padding: 10px 20px;
     background-color: #000000;
+    width: 100%;
+    min-height: 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
 }
 
 .navbar-logo {

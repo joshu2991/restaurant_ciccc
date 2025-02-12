@@ -3,16 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ngrok": "ngrok http --url=composed-repeatedly-magpie.ngrok-free.app 3000",
+    "nextJs": "next dev --turbopack",
+    "dev": " concurrently \"npm run nextJs\" \"npm run ngrok\" "
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.11.2",
+    "@prisma/client": "^6.3.1",
+    "concurrently": "^9.1.2",
+    "mongodb": "^6.13.0",
     "next": "15.1.6",
+    "prisma": "^6.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.4.0"
+    "react-icons": "^5.4.0",
+    "svix": "^1.45.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
