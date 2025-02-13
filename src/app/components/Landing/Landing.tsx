@@ -24,7 +24,7 @@ export default function Landing() {
     const fetchFeaturedItems = async () => {
         try {
             const response = await client.getEntries({
-                content_type: "restaurant",
+                content_type: process.env.CONTENTFUL_MODEL_ID || '',
                 "fields.featured": true,
                 limit: 5,
             });
