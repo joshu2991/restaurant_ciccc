@@ -1,101 +1,84 @@
+import { client } from "./lib/contentful";
 import Image from "next/image";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import "./pages/menu/menu.css";
+import Link from "next/link";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+export default async function Home() {
+    const fetchFeaturedItems = async () => {
+        try {
+            const response = await client.getEntries({
+                content_type: "menuItem",
+                "fields.featured": true,
+                limit: 5,
+            });
+            return response.items;
+        } catch (error) {
+            console.error("Error fetching featured items", error);
+            return [];
+        }
+    };
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    const featuredItems = await fetchFeaturedItems();
+    return (
+        <main className="bg-white py-24 sm:py-32">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="mx-auto max-w-2xl lg:mx-0">
+                    <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-500 sm:text-5xl">
+                        Welcome to GAMA ,
+                    </h2>
+                    <p className="mt-2 text-lg/8 text-gray-600">
+                        {" "}
+                        Explore our handcrafted meals made with love, and let us take you on a culinary journey like no
+                        other. Visit us today and taste the difference!
+                    </p>
+                </div>
+                <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                    {featuredItems.length > 0 ? (
+                        featuredItems.map((entry) => {
+                            const { name, photo, desc, price } = entry.fields as any;
+                            const imageUrl: string = photo?.fields?.file?.url || "";
+                            console.log("Image URL:", imageUrl);
+                            return (
+                                <article
+                                    key={entry.sys.id}
+                                    className="flex max-w-xl flex-col items-start justify-between"
+                                >
+                                    <div className="group relative">
+                                        <h2 className="flex items-center gap-x-4 text-s relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+                                            {typeof name === "string" ? name : "untitled"}
+                                        </h2>
+
+                                        {imageUrl && (
+                                            <Image
+                                                src={`https:${imageUrl}`}
+                                                alt={typeof name === "string" ? name : "image"}
+                                                width={350}
+                                                height={300}
+                                                className="menu-item"
+                                            />
+                                        )}
+                                        <div className="mt-5 line-clamp-5 text-sm/6 text-gray-600">
+                                            {documentToReactComponents(desc)}
+                                        </div>
+                                        <h2 className="text-gray-600">
+                                            $ {typeof price === "number" ? price : "untitled"}
+                                        </h2>
+                                    </div>
+                                    <Link
+                                        href="/login"
+                                        className="mt-4 inline-block text-center text-white bg-green-700 rounded-lg px-4 py-2"
+                                    >
+                                        Log In for Full Menu
+                                    </Link>
+                                </article>
+                            );
+                        })
+                    ) : (
+                        <div>No items available</div> // Optional fallback message
+                    )}
+                </div>
+            </div>
+        </main>
+    );
 }

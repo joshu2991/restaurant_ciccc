@@ -1,39 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Your+Font+Family&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Your+Font+Family&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary-color: #4343B5;
-  --secondary-color: #E47100;
-  --title-primary: #151819;
-  --subtitle-secondary: #FFB55C;
-  --text-white: #FCFCFD;
-  --text-black: #151819;
-  --background-black: #151819;
-  --background-white: #FCFCFD;
+    --background: #ffffff;
+    --foreground: #ffffff;
+    --primary-color: #345e1d;
+    --secondary-color: #e47100;
+    --title-primary: #151819;
+    --subtitle-secondary: #ffb55c;
+    --text-white: #fcfcfd;
+    --text-black: #151819;
+    --background-black: #151819;
+    --background-white: #fcfcfd;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Mona Sans', sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: "Mona Sans", sans-serif;
 }
 
 .text-black {
-  color: var(--text-black) !important;
+    color: var(--text-black) !important;
 }
 
 .text-white {
-  color: var(--text-white) !important;
+    color: var(--text-white) !important;
 }
