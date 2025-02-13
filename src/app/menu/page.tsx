@@ -14,7 +14,7 @@ const MenuPage = () => {
   const fetchEntries = async () => {
     try {
       const entries = await client.getEntries({
-        content_type: process.env.CONTENTFUL_MODEL_ID || '',
+        content_type: process.env.NEXT_PUBLIC_CONTENTFUL_MODEL_ID || '',
       });
       return entries.items;
     } catch (error) {
