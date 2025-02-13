@@ -2,11 +2,10 @@
 import { useCart } from '@/app/context/CartContext';
 import Image from 'next/image';
 import Button from '@/app/components/Button/Button';
-import { useRouter } from 'next/navigation';
+import './cart.css';
 
 const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity, getCartTotal, initiateCheckout } = useCart();
-  const router = useRouter();
 
   if (!cartItems || cartItems.length === 0) {
     return (
@@ -18,53 +17,68 @@ const CartPage = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      {cartItems.map((item) => (
-        <div key={item.sys.id} className="flex items-center border-b py-4">
-          {item.fields.itemImage && (
-            <Image
-              src={`https:${item.fields.itemImage.fields.file.url}`}
-              alt={item.fields.title}
-              width={100}
-              height={100}
-              className="object-cover"
-            />
-          )}
-          <div className="ml-4 flex-grow">
-            <h3 className="font-bold">{item.fields.title}</h3>
-            <p>${item.fields.price}</p>
-            <div className="flex items-center mt-2">
-              <button
-                onClick={() => updateQuantity(item.sys.id, Math.max(0, item.quantity - 1))}
-                className="px-2 py-1 border rounded"
-              >
-                -
-              </button>
-              <span className="mx-2">{item.quantity}</span>
-              <button
-                onClick={() => updateQuantity(item.sys.id, item.quantity + 1)}
-                className="px-2 py-1 border rounded"
-              >
-                +
-              </button>
-              <button
-                onClick={() => removeFromCart(item.sys.id)}
-                className="ml-4 text-red-500"
-              >
-                Remove
-              </button>
+    <div className="container mx-auto p-8 max-w-4xl">
+      <h1 className="text-3xl font-bold mb-8 text-center font-playfair text-[var(--primary-color)] py-8">
+        Your Cart
+      </h1>
+      <div className="space-y-6">
+        {cartItems.map((item) => (
+          <div 
+            key={item.sys.id} 
+            className="flex flex-col md:flex-row items-center bg-[var(--background-white)] p-6 rounded-lg shadow-md border border-gray-100"
+          >
+            {item.fields.photo && (
+              <div className="w-full md:w-1/4 mb-4 md:mb-0">
+                <Image
+                  src={`https:${item.fields.photo.fields.file.url}`}
+                  alt={item.fields.title}
+                  width={200}
+                  height={200}
+                  className="rounded-lg object-cover w-full h-auto image-item-menu"
+                />
+              </div>
+            )}
+            <div className="md:ml-6 flex-grow text-center md:text-left">
+              <h3 className="text-xl font-bold text-[var(--primary-color)] mb-2">{item.fields.title}</h3>
+              <p className="text-[var(--secondary-color)] text-lg font-semibold mb-4">${item.fields.price}</p>
+              <div className="flex items-center justify-center md:justify-start space-x-4">
+                <div className="flex items-center border border-gray-200 rounded-full overflow-hidden">
+                  <button
+                    onClick={() => updateQuantity(item.sys.id, Math.max(0, item.quantity - 1))}
+                    className="px-4 py-2 hover:bg-gray-100 transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="px-4 font-semibold">{item.quantity}</span>
+                  <button
+                    onClick={() => updateQuantity(item.sys.id, item.quantity + 1)}
+                    className="px-4 py-2 hover:bg-gray-100 transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+                <button
+                  onClick={() => removeFromCart(item.sys.id)}
+                  className="text-[var(--secondary-color)] hover:text-red-700 transition-colors font-semibold"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
+        ))}
+      </div>
+      <div className="mt-8 border-t pt-6">
+        <div className="flex flex-col items-center">
+          <p className="text-2xl font-bold text-[var(--primary-color)] mb-6">
+            Total: ${getCartTotal().toFixed(2)}
+          </p>
+          <Button
+            text="Proceed to Checkout"
+            classname="button-primary w-full md:w-auto"
+            onClick={initiateCheckout}
+          />
         </div>
-      ))}
-      <div className="mt-4">
-        <p className="text-xl font-bold">Total: ${getCartTotal().toFixed(2)}</p>
-        <Button
-          text="Proceed to Checkout"
-          classname="button-primary mt-4"
-          onClick={initiateCheckout}
-        />
       </div>
     </div>
   );

@@ -3,16 +3,8 @@ import { createContext, useContext, useState, ReactNode, useEffect } from 'react
 import { CartItem } from '@/types/Cart/Cart';
 import toast from 'react-hot-toast';
 import { loadStripe } from '@stripe/stripe-js';
-
-interface CartContextType {
-  cartItems: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (itemId: string) => void;
-  updateQuantity: (itemId: string, quantity: number) => void;
-  clearCart: () => void;
-  getCartTotal: () => number;
-  initiateCheckout: () => Promise<void>;
-}
+import { CartContextType } from '@/types/Cart/Cart';
+import { Toaster } from 'react-hot-toast';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -133,6 +125,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       getCartTotal,
       initiateCheckout
     }}>
+      <Toaster />
       {children}
     </CartContext.Provider>
   );

@@ -3,7 +3,7 @@ export interface CartItem {
     fields: {
       title: string;
       price: number;
-      itemImage?: {
+      photo?: {
         fields: {
           file: {
             url: string;
@@ -12,4 +12,14 @@ export interface CartItem {
       };
     };
     quantity: number;
+  }
+
+  export interface CartContextType {
+    cartItems: CartItem[];
+    addToCart: (item: CartItem) => void;
+    removeFromCart: (itemId: string) => void;
+    updateQuantity: (itemId: string, quantity: number) => void;
+    clearCart: () => void;
+    getCartTotal: () => number;
+    initiateCheckout: () => Promise<void>;
   }
