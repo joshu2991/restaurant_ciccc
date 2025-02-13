@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Your+Font+Family&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Your+Font+Family&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -57,9 +57,9 @@ body {
 }
 
 .text-black {
-  color: var(--text-black) !important;
+    color: var(--text-black) !important;
 }
 
 .text-white {
-  color: var(--text-white) !important;
+    color: var(--text-white) !important;
 }

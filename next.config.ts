@@ -8,6 +8,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'assets.ctfassets.net',
+      },
+      {
+        protocol: 'https',
         hostname: 'stripe.com',
       }
     ],

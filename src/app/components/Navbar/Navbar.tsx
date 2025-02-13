@@ -19,18 +19,16 @@ export default function Navbar({ logo, links, buttonText, buttonClassname }: Nav
                     onClick={() => setIsOpen(!isOpen)}
                     className="text-gray-500 hover:text-gray-700 focus:outline-none"
                 >
-                    {isOpen ? (
-                        <HiX className="h-6 w-6" />
-                    ) : (
-                        <HiMenu className="h-6 w-6" />
-                    )}
+                    {isOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
                 </button>
             </div>
             {isOpen && (
                 <div className="absolute top-16 left-0 right-0 bg-black shadow-md sm:hidden">
                     <ul className="flex flex-col p-4">
                         {links.map((link, index) => (
-                            <li key={index} className="py-2">{link}</li>
+                            <li key={index} className="py-2">
+                                {link}
+                            </li>
                         ))}
                     </ul>
                 </div>
@@ -43,8 +41,8 @@ export default function Navbar({ logo, links, buttonText, buttonClassname }: Nav
                 </ul>
             </div>
             <div className="navbar-button">
-                <Button text={buttonText} classname={buttonClassname}/>
+                <Button text={buttonText} classname={buttonClassname} />
             </div>
         </nav>
-    )
+    );
 }
