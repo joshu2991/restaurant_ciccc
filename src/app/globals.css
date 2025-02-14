@@ -5,17 +5,17 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #474747;
-  --primary-color: #2C2F24;
-  --secondary-color: #AD343E;
-  --third-color: #474747;
-  --title-primary: #2C2F24;
-  --subtitle-secondary: #AD343E;
-  --text-white: #FCFCFD;
-  --text-black: #2C2F24;
-  --background-black: #474747;
-  --background-white: #FCFCFD;
+    --background: #ffffff;
+    --foreground: #474747;
+    --primary-color: #2c2f24;
+    --secondary-color: #ad343e;
+    --third-color: #474747;
+    --title-primary: #2c2f24;
+    --subtitle-secondary: #ad343e;
+    --text-white: #fcfcfd;
+    --text-black: #2c2f24;
+    --background-black: #474747;
+    --background-white: #fcfcfd;
 }
 /*
 @media (prefers-color-scheme: dark) {
@@ -35,25 +35,24 @@
 }
 */
 
-
 @font-face {
-  font-family: 'Playfair Display 400';
-  src: url('/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
+    font-family: "Playfair Display 400";
+    src: url("/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Playfair Display 700';
-  src: url('/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
+    font-family: "Playfair Display 700";
+    src: url("/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Playfair Display 400', sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: "Playfair Display 400", sans-serif;
 }
 
 .text-black {

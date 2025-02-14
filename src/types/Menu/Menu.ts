@@ -15,4 +15,5 @@ export interface MenuListProps {
     items: any[];
     onAddToCart?: (item: any) => void;
     onViewFullMenu?: () => void;
-  }
+    onViewDetails?: () => void;
+}
