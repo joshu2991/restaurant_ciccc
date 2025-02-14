@@ -1,34 +1,10 @@
 import type { Metadata } from "next";
-import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import { CartProvider } from "./context/CartContext";
 import { Footer } from "./components/Footer/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-
-/*
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-*/
-
-const roboto = Roboto({
-  variable: "--font-geist-sans", // keeping the same variable name for consistency
-  weight: ['400', '700'],  // you can adjust weights as needed
-  subsets: ["latin"],
-});
-
-const robotoMono = Roboto_Mono({
-  variable: "--font-geist-mono", // keeping the same variable name for consistency
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -43,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${roboto.variable} ${robotoMono.variable} antialiased min-h-full flex flex-col`}
+        className={`antialiased min-h-full flex flex-col`}
       >
         <ClerkProvider
           appearance={{
