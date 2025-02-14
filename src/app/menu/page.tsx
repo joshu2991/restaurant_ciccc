@@ -7,9 +7,11 @@ import MenuList from '@/app/components/MenuList/MenuList';
 import Section from '@/app/components/Section/Section';
 export const dynamic = 'force-dynamic';
 
+
 const MenuPage = () => {
   const [menuItems, setMenuItems] = useState<any[]>([]);
   const { addToCart } = useCart();
+
 
   const fetchEntries = async () => {
     try {

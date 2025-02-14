@@ -5,6 +5,7 @@ import Button from '@/app/components/Button/Button';
 import { MenuListProps } from '@/types/Menu/Menu';
 import { useCart } from '@/app/context/CartContext';
 import { useRouter, usePathname } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 
 
 export default function MenuList({ items, onAddToCart, onViewFullMenu }: MenuListProps) {
@@ -12,6 +13,9 @@ export default function MenuList({ items, onAddToCart, onViewFullMenu }: MenuLis
   const router = useRouter();
   const pathname = usePathname();
   const { cartItems } = useCart();
+
+  //Check if user is logged in
+  const { isSignedIn } = useUser();
   
   const SeeMyCart = () => {
     router.push('/cart');
@@ -49,7 +53,13 @@ export default function MenuList({ items, onAddToCart, onViewFullMenu }: MenuLis
                 </div>
               </div>
               <div className="menu-item-button">
-                {onAddToCart ? (
+                {!isSignedIn ? (
+                  <Button 
+                    text="Sign Up to Order" 
+                    classname="button-secondary button-secondary-sm" 
+                    onClick={() => router.push('/sign-up')} 
+                  />
+                ) : onAddToCart ? (
                   <Button 
                     text="Add to Cart" 
                     classname="button-secondary button-secondary-sm" 
