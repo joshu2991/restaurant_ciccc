@@ -15,7 +15,7 @@
   --text-white: #FCFCFD;
   --text-black: #2C2F24;
   --background-black: #474747;
-  --background-white: #FCFCFD;
+  --background-white: #FCFCFD; 
 }
 /*
 @media (prefers-color-scheme: dark) {
