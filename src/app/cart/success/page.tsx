@@ -1,6 +1,17 @@
+'use client';
+import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from "next/link";
 
 export default function SuccessPage() {
+  const searchParams = useSearchParams();
+  
+  useEffect(() => {
+    if (searchParams.get('clear_cart') === 'true') {
+      localStorage.removeItem('cart');
+    }
+  }, [searchParams]);
+
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
