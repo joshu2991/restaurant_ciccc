@@ -1,11 +1,14 @@
 'use client';
 
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function SuccessPage() {
-  
-  localStorage.removeItem('cart');
-
+  useEffect(() => {
+    if (localStorage.getItem('cart')) {
+      localStorage.removeItem('cart');
+    }
+  }, []);
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
